@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CharacterSheet : MonoBehaviour
@@ -10,10 +11,16 @@ public class CharacterSheet : MonoBehaviour
     [SerializeField] [Range(-5,5)] int str = 0;
     [SerializeField] [Range(-5, 5)] int dex = 0;
 
+    public GameObject strNum;
+    public GameObject dexNum;
+    public GameObject profNum;
+    public GameObject charName;
+
+
     // Start is called before the first frame update
     void Start()
     {
-
+        Debug.Log("blah blah " + 0);
 
         Debug.Log(characterName + "\'s modifier is " + CheckPositive(FindModifier()) );
 
@@ -57,5 +64,22 @@ public class CharacterSheet : MonoBehaviour
         if (i > 0)
             return "+" + i;
         else return "" + i;
+    }
+
+    [ContextMenu("Update Character Sheet")]
+    void UpdateSheet()
+    {
+        TextMeshProUGUI text;
+        text = strNum.GetComponent<TextMeshProUGUI>();
+        text.SetText(CheckPositive(str));
+
+        text = dexNum.GetComponent<TextMeshProUGUI>();
+        text.SetText(CheckPositive(dex));
+
+        text = profNum.GetComponent<TextMeshProUGUI>();
+        text.SetText(CheckPositive(proficiency));
+
+        text = charName.GetComponent<TextMeshProUGUI>();
+        text.SetText(characterName);
     }
 }
