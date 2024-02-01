@@ -11,16 +11,16 @@ public class CharacterSheet : MonoBehaviour
     [SerializeField] [Range(-5,5)] int str = 0;
     [SerializeField] [Range(-5, 5)] int dex = 0;
 
-    public GameObject strNum;
-    public GameObject dexNum;
-    public GameObject profNum;
-    public GameObject charName;
+    [SerializeField] GameObject strNum;
+    [SerializeField] GameObject dexNum;
+    [SerializeField] GameObject profNum;
+    [SerializeField] GameObject charName;
+    [SerializeField] GameObject rollNum;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("blah blah " + 0);
 
         Debug.Log(characterName + "\'s modifier is " + CheckPositive(FindModifier()) );
 
@@ -28,6 +28,7 @@ public class CharacterSheet : MonoBehaviour
         Debug.Log("Enemy AC is " + enemyAC);
         int roll20 = UnityEngine.Random.Range(1, 21);
         Debug.Log(characterName + " rolled a " + roll20);
+        UpdateRoll(roll20);
         if (FindModifier()+roll20 >= enemyAC)
         {
             Debug.Log(characterName + " hit the enemy!");
@@ -36,7 +37,7 @@ public class CharacterSheet : MonoBehaviour
         {
             Debug.Log(characterName + " missed!");
         }
-
+        UpdateSheet();
     }
 
     // Update is called once per frame
@@ -81,5 +82,11 @@ public class CharacterSheet : MonoBehaviour
 
         text = charName.GetComponent<TextMeshProUGUI>();
         text.SetText(characterName);
+    }
+    void UpdateRoll(int roll)
+    {
+        TextMeshProUGUI text;
+        text = rollNum.GetComponent<TextMeshProUGUI>();
+        text.SetText(roll+CheckPositive(FindModifier()));
     }
 }
